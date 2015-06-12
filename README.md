@@ -6,7 +6,7 @@ stays up to date.
 
 ## In Progress
 
-[Sense API v2 - Timeline](https://app.apiary.io/sensetimelinev2/editor):
+[Sense API v2 - Timeline](https://github.com/hello/suripu-spec/pulls/1):
 Source available
 [here](https://github.com/hello/suripu-spec/tree/v2-timeline)
 
