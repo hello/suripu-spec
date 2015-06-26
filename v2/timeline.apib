@@ -7,7 +7,11 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 
 + Attributes
     + score: `78` (required, number) - A value quantifying sleep quality
-    + `score_condition`: `ALERT` (required, string) - A relative value for sleep quality
+    + `score_condition`: `ALERT` (required, enum[Condition]) - A relative value for sleep quality
+        + Members
+            + `IDEAL`
+            + `WARNING`
+            + `ALERT`
     + message: `You were asleep for 7.8 hours and sleeping soundly for 5.4 hours.` (required, string)
     + date: `2015-03-11` (required, string) - Date for the night of sleep
     + events (array[Event], required)
@@ -31,8 +35,34 @@ Timeline is an API allowing consumers to view detailed and summarized data about
     + `duration_millis`: `27000` (number, required) - Duration of the event in milliseconds
     + message: `You were moving around` (string)
     + `sleep_depth`: `24` (number) - Depth of sleep during the event
-    + `sleep_state`: `LIGHT` (string, required) - State of sleep depth or wakefulness
-    + `event_type`: `GENERIC_MOTION` (string) - Type of the event which occurred
+    + `sleep_state`: `LIGHT` (enum[SleepState], required) - State of sleep depth or wakefulness
+        + Members
+            + `AWAKE`
+            + `SOUND`
+            + `MEDIUM`
+            + `LIGHT`
+    + `event_type`: `GENERIC_MOTION` (enum[EventType]) - Type of the event which occurred
+        + Members
+            + `GENERIC_MOTION`
+            + `PARTNER_MOTION`
+            + `GENERIC_SOUND`
+            + `SNORED`
+            + `SLEEP_TALKED`
+            + `LIGHT`
+            + `LIGHTS_OUT`
+            + `SUNSET`
+            + `SUNRISE`
+            + `GOT_IN_BED`
+            + `FELL_ASLEEP`
+            + `GOT_OUT_OF_BED`
+            + `WOKE_UP`
+            + `ALARM_RANG`
+            + `UNKNOWN`
+    + `valid_actions`: (array[enum[Action]]) - What actions can be taken on this event
+        + Members
+            + `ADJUST_TIME`
+            + `VERIFY`
+            + `REMOVE`
 
 ### Amend the time of an event [PATCH]
 
