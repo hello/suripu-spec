@@ -10,7 +10,7 @@ Timeline is an API allowing consumers to view detailed and summarized data about
     + `score_condition`: `ALERT` (required, string) - A relative value for sleep quality
     + message: `You were asleep for 7.8 hours and sleeping soundly for 5.4 hours.` (required, string)
     + date: `2015-03-11` (required, string) - Date for the night of sleep
-    + segments (array[Event], required)
+    + events (array[Event], required)
     + metrics (array[Metric])
 
 ### View a night's sleep data [GET]
@@ -28,7 +28,7 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 + Attributes
     + timestamp: `1432768812` (number, required)
     + `timezone_offset`: `860000` (number, required) - Offset between timestamp and user's local time in milliseconds
-    + duration: `27000` (number, required) - Duration of the event in seconds
+    + `duration_millis`: `27000` (number, required) - Duration of the event in milliseconds
     + message: `You were moving around` (string)
     + `sleep_depth`: `24` (number) - Depth of sleep during the event
     + `sleep_state`: `LIGHT` (string, required) - State of sleep depth or wakefulness
