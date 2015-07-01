@@ -22,7 +22,7 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 + Response 200 (application/json)
     + Attributes (Timeline)
 
-## Event [/timeline/{date}/event{?event_type,event_timestamp,new_event_time}]
+## Event [/timeline/{date}/events/{type}/{timestamp}]
 
 + Parameters
     + date: `2015-04-12` (string, required) - An ISO8601 formatted date
@@ -67,17 +67,21 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 
 ### Amend the time of an event [PATCH]
 
-+ Parameters
-    + `new_event_time`: `14:52` (string, required) The corrected time submitted by the user
++ Relation: update
++ Request (application/json)
+    + Attributes
+        + `new_event_time`: `14:52` (string, required) The corrected time submitted by the user
 
 + Response 202 (Timeline)
 
 ### Mark an event as correct [PUT]
 
++ Relation: approve
 + Response 202 (Timeline)
 
 ### Delete an event [DELETE]
 
++ Relation: delete
 + Response 202 (Timeline)
 
 ## Data Structures
