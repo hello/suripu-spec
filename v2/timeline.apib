@@ -7,7 +7,7 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 
 + Attributes
     + score: `78` (required, number) - A value quantifying sleep quality
-    + `score_condition`: `ALERT` (required, enum[Condition]) - A relative value for sleep quality
+    + `score_condition`: `ALERT` (required, enum) - A relative value for sleep quality
         + Members
             + `IDEAL`
             + `WARNING`
@@ -26,8 +26,8 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 
 + Parameters
     + date: `2015-04-12` (string, required) - An ISO8601 formatted date
-    + `event_type`: `ALARM_RANG` (string, required) - The type of the event
-    + `event_timestamp`: `1432768812` (number, required) - The unix timestamp of the time the event occured
+    + type: `ALARM_RANG` (string, required) - The type of the event
+    + timestamp: `1432768812` (number, required) - The unix timestamp of the time the event occured
 
 + Attributes
     + timestamp: `1432768812` (number, required)
@@ -35,13 +35,13 @@ Timeline is an API allowing consumers to view detailed and summarized data about
     + `duration_millis`: `27000` (number, required) - Duration of the event in milliseconds
     + message: `You were moving around` (string)
     + `sleep_depth`: `24` (number) - Depth of sleep during the event
-    + `sleep_state`: `LIGHT` (enum[SleepState], required) - State of sleep depth or wakefulness
+    + `sleep_state`: `LIGHT` (enum, required) - State of sleep depth or wakefulness
         + Members
             + `AWAKE`
             + `SOUND`
             + `MEDIUM`
             + `LIGHT`
-    + `event_type`: `GENERIC_MOTION` (enum[EventType]) - Type of the event which occurred
+    + `event_type`: `GENERIC_MOTION` (enum) - Type of the event which occurred
         + Members
             + `IN_BED`
             + `GENERIC_MOTION`
@@ -59,11 +59,12 @@ Timeline is an API allowing consumers to view detailed and summarized data about
             + `WOKE_UP`
             + `ALARM_RANG`
             + `UNKNOWN`
-    + `valid_actions`: (array[enum[Action]]) - What actions can be taken on this event
-        + Members
-            + `ADJUST_TIME`
-            + `VERIFY`
-            + `REMOVE`
+    + `valid_actions`: (array) - What actions can be taken on this event
+        + Items
+            + Members
+                + `ADJUST_TIME`
+                + `VERIFY`
+                + `REMOVE`
 
 ### Amend the time of an event [PATCH]
 
