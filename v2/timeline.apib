@@ -6,16 +6,17 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 ## Timeline [/timeline/{date}]
 
 + Attributes
-    + score: `78` (required, number) - A value quantifying sleep quality
+    + score: `78` (optional, number) - A value quantifying sleep quality
     + `score_condition`: `ALERT` (required, enum) - A relative value for sleep quality
         + Members
+            + `UNAVAILABLE`
             + `IDEAL`
             + `WARNING`
             + `ALERT`
     + message: `You were asleep for 7.8 hours and sleeping soundly for 5.4 hours.` (required, string)
     + date: `2015-03-11` (required, string) - Date for the night of sleep
     + events (array[Event], required)
-    + metrics (array[Metric])
+    + metrics (array[Metric], required)
 
 ### View a night's sleep data [GET]
 
@@ -89,7 +90,24 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 
 ### Metric
 
-+ name: `time_to_sleep` (string, required) - type of metric
-+ value: `46` (string, required) - value
-+ unit: `min` (string, required) - unit of value
++ name: `time_to_sleep` (enum, required) - type of metric
+    + Members
+        + `total_sleep`
+        + `sound_sleep`
+        + `time_to_sleep`
+        + `times_awake`
+        + `fell_asleep`
+        + `woke_up`
+        + `temperature`
+        + `humidity`
+        + `particulates`
+        + `sound`
+        + `light`
++ value: 46 (optional, number) - the value of the metric
++ unit: `MINUTES` (enum, required) - unit of value
+    + Members
+        + `MINUTES`
+        + `QUANTITY`
+        + `TIMESTAMP` - milliseconds since epoch
+        + `CONDITION` - `value` is absent
 + condition: `ALERT` - quality of value
