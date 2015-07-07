@@ -4,6 +4,8 @@ Specification and collaboration around the Sense client API, and
 eventually continuous integration of the documentation to ensure it
 stays up to date.
 
+[Interactive Documentation](http://docs.sensev2.apiary.io/)
+
 ## In Progress
 
 [Sense API v2 - Sensors](https://github.com/hello/suripu-spec/issue/2)
