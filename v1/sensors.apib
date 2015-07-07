@@ -1,0 +1,88 @@
+FORMAT: 1A
+
+# Sensors v1
+Sensors is an API allowing consumers to view current and historical room conditions.
+
+**Requires access token**
+
+**Scope**: `OAuthScope.SENSORS_BASIC`
+
+**Note**: We validate that the current timestamp in millis is within reasonable bounds of the current time. There's a decent margin to avoid issues coming from clock skew and/or ntp out-of-sync.
+
+
+# Group Room Conditions
+
+## Sensor [/room/{sensor}]
+
++ Attributes
+    + name: `temperature` (required, string)
+    + value: `19` (required, number)
+    + message: `It is **too warm** in here for ideal comfort.` (required, string) - Quantifying summary of the sensor value. Can contain markdown.
+    + condition: `ALERT` (required, enum) - A relative value for sensor value quality
+      + Members
+        + `UNAVAILABLE`
+        + `IDEAL`
+        + `WARNING`
+        + `ALERT`
+    + `last_updated_utc`: `1432768812000` (required, number) - Most recent time at which this sensor was updated. Unix timestamp in milliseconds.
+    + `ideal_conditions`: `You sleep best when the temperature is between **18º and 21º**` (optional, string) - Description of the ideal range for this sensor. Can contain markdown.
+    + unit: `c` (required, enum) - Unit of measurement of the value quantity
+      + Members
+        + `c`
+        + `AQI`
+        + `%`
+        + `lux`
+        + `dB`
+
+## Sensors [/room/current]
+
++ Attributes (array[Sensor])
+
+### Fetch all sensors current condition [GET]
+
++ Response 200 (application/json)
+    + Attributes (Sensors)
+
+## Sensor Data Point [/room/{sensor}/{period}?from={timestamp}]
+
++ Parameters
+    + sensor: `temperature` (required, enum) - Name of a sensor
+        + Members
+            + `temperature`
+            + `humidity`
+            + `sound`
+            + `light`
+            + `particulates`
+    + period: `day` (required, enum) - Time period to return
+        + Members
+            + `day`
+            + `week`
+    + timestamp: `3452482291000` (number, required) - Current Unix timestamp in milliseconds
+
+
++ Attributes
+    + value: `22` (required, number)
+    + datetime: `1432768812000` (required, number) - Unix timestamp in milliseconds
+    + `offset_millis`: `860000` (required, number) - Offset between the timestamp and the user's local time in milliseconds
+
+### Fetch a sensor's conditions for the past [GET]
+
++ Response 200 (application/json)
+    + Attributes (Sensor Data Points)
+
+## Sensor Data Points [/room/all_sensors/{period}?from_utc={timestamp}]
+
++ Attributes (array[Sensor Data Point])
+
+### Fetch all sensors conditions for the past [GET]
+
++ Parameters
+    + period: `24hours` (required, enum) - Time period to return
+        + Members
+            + `24hours`
+            + `week`
+    + timestamp: `3452482291000` (number, required) - Current Unix timestamp in milliseconds
+
++ Response 200 (application/json)
+    + Attributes (Sensor Data Points)
+
