@@ -6,7 +6,7 @@ stays up to date.
 
 ## In Progress
 
-[Sense API v2 - Sensors](https://github.com/hello/suripu-spec/issue/1)
+[Sense API v2 - Sensors](https://github.com/hello/suripu-spec/issue/2)
 
 
 ## Development
