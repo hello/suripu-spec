@@ -6,9 +6,8 @@ stays up to date.
 
 ## In Progress
 
-[Sense API v2 - Timeline](https://github.com/hello/suripu-spec/pull/1):
-Source available
-[here](https://github.com/hello/suripu-spec/tree/v2-timeline)
+[Sense API v2 - Sensors](https://github.com/hello/suripu-spec/issue/1)
+
 
 ## Development
 
