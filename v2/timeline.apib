@@ -66,6 +66,7 @@ Timeline is an API allowing consumers to view detailed and summarized data about
                 + `ADJUST_TIME`
                 + `VERIFY`
                 + `REMOVE`
+                + `INCORRECT`
 
 ### Amend the time of an event [PATCH]
 
@@ -73,6 +74,7 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 + Request (application/json)
     + Attributes
         + `new_event_time`: `14:52` (string, required) The corrected time submitted by the user
+        + `timezone_offset`: `860000` (number, required) - User's local time zone in milliseconds
 
 + Response 202 (application/json)
     + Attributes (Timeline)
