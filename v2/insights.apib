@@ -37,6 +37,7 @@ FORMAT: 1A
 			+ `ARTICLE` - corresponds to `ArticleAttachment` 
 			+ `QUESTION` - corresponds to `QuestionAttachment`
 			+ `GRAPH` - corresponds to `GraphAttachment`
+			+ `COLLECTION` - corresponds to `AttachmentCollection`
 	+ `unread`: `false` (boolean, required)
 
 ### ArticleAttachment (Attachment)
@@ -87,3 +88,8 @@ FORMAT: 1A
 	+ `max_y`: `42.0` (number, required)
 	+ `unit_y` (string, required)
 	+ `samples` (array[number], required)
+
+### AttachmentCollection (Attachment)
+
++ Attributes
+	+ `attachments` (array[Attachment], required)
