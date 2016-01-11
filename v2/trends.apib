@@ -1,0 +1,65 @@
+FORMAT: 1A
+
+# GET /v2/trends/{time-scale}
+Fetches the trends within the given *time-scale*.
+
++ Parameters
+	+ `time-scale`: `last_7_days` (required, TimeScale)
+
++ Attributes (array[Trend])
+
+# Data Structures
+
+## Trend (object)
+
++ `time_scale`: `last_7_days` (required, TimeScale) - the time scale of the _Trend_. If a client encounters a `time_scale` value it does not understand, **it should not display the time scale in its UI.**
++ title: `Sleep Duration` (required, string) - the human-readable title of the trend.
++ `data_type`: `SCORES` (required, DataType) - the type of data represented by the trend.
++ `graph_type`: `LINE` (required, GraphType) - how to display the data.
++ `min_value`: `6.5` (required, number)
++ `max_value`: `9.0` (required, number)
++ values: `[8.2, 8.3, 6.6, 6.9, 9.0, 8.0]` (required, array[number])
++ annotations: `[{"title": "Weekdays", "value": 8.3}]` (optional, array[DataAnnotation])
++ `condition_ranges`: `` (required, array[ConditionRange]) - defines the relationship between a value, and its subjective feeling.
+
+## DataAnnotation (object)
+Calls out specific data points in a _Trend_ object as having significance. The data type is inherited from the containing _Trend_ object. How _DataAnnotation_s are displayed is client-defined.
+
++ title: `Weekdays` (required, string) - the human-readable title of the Trend data annotation.
++ value (required, number) - the value of the annotation, has the same format as the containing _Trend_ object.
+
+## ConditionRange (object)
+Maps a range of trend data values onto a _Condition_. If a client encounters a value that is not contained in any _ConditionRange_ object returned to it, **it should assume the value _Condition_ is _UNKNOWN_.**
+
++ `min_value`: `0.0` (required, number) - the minimum value, inclusive.
++ `max_value`: `0.5` (required, number) - the maximum value, inclusive.
++ condition: `ALERT` (required, Condition) - the condition this range represents.
+
+## Condition (enum)
+The subjective condition of a trend data value. If a client encounters a _Condition_ that it does not understand, **it should default to _UNKNOWN_.**
+
++ ALERT
++ WARNING
++ IDEAL
++ UNKNOWN
+
+## TimeScale (enum)
+The time frame a _Trend_ object contains data for.
+
++ `last_7_days`
++ `last_30_days`
++ `last_3_months`
+
+## DataType (enum)
+The types of data that can be represented by a _Trend_ object. If a client encounters a _DataType_ that it does not understand, **it should display the values in the user interface verbatim.**
+
++ SCORES - The data points are integers within the range `{0, 100}`, inclusive.
++ HOURS - The data points are floating point numbers representing whole and partial hours.
++ PERCENTS - The data points are floating point numbers within the range `{0.0, 1.0}` inclusive, and will always add up to a value of `1.0`.
+
+## GraphType (enum)
+The types of graphs that can be used to represent data contained in a _Trend_ object. If the client encounters _GraphType_ that it does not understand, **it should ignore the entire _Trend_ object.**
+
++ GRID
++ LINE
++ BUBBLES
