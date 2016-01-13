@@ -68,5 +68,5 @@ The types of data that can be represented by a _Trend_ object. If a client encou
 The types of graphs that can be used to represent data contained in a _Trend_ object. If the client encounters _GraphType_ that it does not understand, **it should ignore the entire _Trend_ object.**
 
 + GRID - the trend data should be displayed as a grid of values. if the client finds there are not enough values to complete a grid row, **it should display empty items in place of actual values.**
-+ LINE - the trend data should be displayed as a horizontal line graph.
++ BAR - the trend data should be displayed as a bar graph.
 + BUBBLES - the trend data should be displayed as a series of overlapping bubbles. only applicable to the `DataType` value `PERCENTS`.
