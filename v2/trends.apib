@@ -27,7 +27,8 @@ Describes a sequence of values within a trend. For `LINE` trends, a section woul
 
 + values: `[8.2, 8.3, 6.6, 6.9, 9.0, 8.0, 7.5]` (required, array[number])
 + titles: `["s", "m", "t", "w", "t", "f", "s"]` (optional, array[string]) - the human-readable titles for the `values` in this section. if the values do not have titles, this array can be omitted in the payload. **this array may contain fewer items than `values`.**
-+ highlights: `[2, 4]` (required, array[number]) - the indexes of the items in `values` that should be highlighted when this section is rendered.
++ `highlighted_values`: `[2, 4]` (required, array[number]) - the indexes of the items in `values` that should be highlighted when this section is rendered.
++ `highlighted_title`: `2` (optional, number) - the section title that is currently highlighted. typically the current day of the week.
 
 ## TrendAnnotation (object)
 Calls out specific information contained in a trend object. Trend annotations should be displayed _below_ the graph contained in a _Trend_ object.
