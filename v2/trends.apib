@@ -19,7 +19,7 @@ Fetches the trends within the given *time-scale*.
 + `min_value`: `6.5` (required, number)
 + `max_value`: `9.0` (required, number)
 + sections (required, array[TrendSection])
-+ `condition_ranges`: `` (required, array[ConditionRange]) - defines the relationship between a value, and its subjective feeling.
++ `condition_ranges`: `` (optional, array[ConditionRange]) - defines the relationship between a value, and its subjective feeling. if this field is omitted, the client **should assume the _Condition_ for all values is _UNKNOWN_.**
 + annotations: `[{"title": "Weekdays", "value": 8.3, "data_type": "HOURS"}]` (optional, array[TrendAnnotation]) - calls out specific information related to the trend graph.
 
 ## TrendSection (object)
