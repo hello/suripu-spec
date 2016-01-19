@@ -4,7 +4,7 @@ FORMAT: 1A
 Fetches the trends within the given *time-scale*.
 
 + Parameters
-	+ `time-scale`: `last_7_days` (required, TimeScale)
+	+ `time-scale`: `last_week` (required, TimeScale)
 
 + Attributes (array[Trend])
 
@@ -12,7 +12,7 @@ Fetches the trends within the given *time-scale*.
 
 ## Trend (object)
 
-+ `time_scale`: `last_7_days` (required, TimeScale) - the time scale of the _Trend_. If a client encounters a `time_scale` value it does not understand, **it should not display the time scale in its UI.**
++ `time_scale`: `last_week` (required, TimeScale) - the time scale of the _Trend_. If a client encounters a `time_scale` value it does not understand, **it should not display the time scale in its UI.**
 + title: `Sleep Duration` (required, string) - the human-readable title of the trend.
 + `data_type`: `SCORES` (required, DataType) - the type of data represented by the trend.
 + `graph_type`: `LINE` (required, GraphType) - how to display the data.
@@ -55,9 +55,9 @@ Defines how data should be divided into sections for graphs that required it. Cu
 ## TimeScale (enum)
 The time frame a _Trend_ object contains data for.
 
-+ `last_7_days`
-+ `last_30_days`
-+ `last_90_days`
++ `last_week`
++ `last_month`
++ `last_3_months`
 
 ## DataType (enum)
 The types of data that can be represented by a _Trend_ object. If a client encounters a _DataType_ that it does not understand, **it should display the values in the user interface verbatim.**
