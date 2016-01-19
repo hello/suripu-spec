@@ -20,14 +20,16 @@ Fetches the trends within the given *time-scale*.
 + `max_value`: `9.0` (required, number)
 + values: `[8.2, 8.3, 6.6, 6.9, 9.0, 8.0]` (required, array[number])
 + `condition_ranges`: `` (required, array[ConditionRange]) - defines the relationship between a value, and its subjective feeling.
-+ annotations: `[{"title": "Weekdays", "value": 8.3}]` (optional, array[DataAnnotation])
++ annotations: `[{"title": "Weekdays", "value": 8.3, "data_type": "HOURS"}]` (optional, array[TrendAnnotation]) - calls out specific information related to the trend graph.
 + `section_rules` (optional, array[SectionRules])
 
-## DataAnnotation (object)
-Calls out specific data points in a _Trend_ object as having significance. The data type is inherited from the containing _Trend_ object. How _DataAnnotation_s are displayed is client-defined.
+## TrendAnnotation (object)
+Calls out specific information contained in a trend object. Trend annotations should be displayed _below_ the graph contained in a _Trend_ object.
 
 + title: `Weekdays` (required, string) - the human-readable title of the Trend data annotation.
-+ value (required, number) - the value of the annotation, has the same format as the containing _Trend_ object.
++ value: `7.47` (required, number) - the value of the annotation.
++ `data_type`: `HOURS` (required, DataType) - the type of data represented by _value_.
++ condition: `IDEAL` (optional, Condition) - the condition of the _value_. If this field is omitted, the client should display the _value_ with a neutral color.
 
 ## ConditionRange (object)
 Maps a range of trend data values onto a _Condition_. If a client encounters a value that is not contained in any _ConditionRange_ object returned to it, **it should assume the value _Condition_ is _UNKNOWN_.**
