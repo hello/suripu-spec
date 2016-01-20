@@ -1,0 +1,77 @@
+FORMAT: 1A
+
+# GET /v2/trends/{time-scale}
+Fetches the trends within the given *time-scale*.
+
++ Parameters
+	+ `time-scale`: `last_week` (required, TimeScale)
+
++ Attributes
+	+ `available_time_scales`: `["last_week", "last_month", "last_3_months"]` (required, array[TimeScale]) - the time scales the server can provide data for.
+	+ graphs (array[Graph]) - the objects found for the given time scale.
+
+# Data Structures
+
+## Graph (object)
+
++ `time_scale`: `last_week` (required, TimeScale) - the time scale of the _Graph_. If a client encounters a `time_scale` value it does not understand, **it should not display the time scale in its UI.**
++ title: `Sleep Duration` (required, string) - the human-readable title of the trend.
++ `data_type`: `SCORES` (required, DataType) - the type of data represented by the trend.
++ `graph_type`: `LINE` (required, GraphType) - how to display the data.
++ `min_value`: `6.5` (required, number)
++ `max_value`: `9.0` (required, number)
++ sections (required, array[GraphSection])
++ `condition_ranges`: `` (optional, array[ConditionRange]) - defines the relationship between a value, and its subjective feeling. if this field is omitted, the client **should assume the _Condition_ for all values is _UNKNOWN_.**
++ annotations: `[{"title": "Weekdays", "value": 8.3, "data_type": "HOURS"}]` (optional, array[Annotation]) - calls out specific information related to the trend graph.
+
+## GraphSection (object)
+Describes a sequence of values within a graph. For `LINE` graphs, a section would correspond to one month. For `GRID` graphs, a section would either correspond to a week (7 values). For `OVERVIEW` trends, a section would correspond to a month (28 to 31 values).
+
++ values: `[8.2, 8.3, 6.6, 6.9, 9.0, 8.0, 7.5]` (required, array[number])
++ titles: `["s", "m", "t", "w", "t", "f", "s"]` (optional, array[string]) - the human-readable titles for the `values` in this section. if the values do not have titles, this array can be omitted in the payload. **this array may contain fewer items than `values`.**
++ `highlighted_values`: `[2, 4]` (required, array[number]) - the indexes of the items in `values` that should be highlighted when this section is rendered.
++ `highlighted_title`: `2` (optional, number) - the section title that is currently highlighted. typically the current day of the week.
+
+## Annotation (object)
+Calls out specific information contained in a graph object. Annotations should be displayed _below_ rendered graphs.
+
++ title: `Weekdays` (required, string) - the human-readable title of the data annotation.
++ value: `7.47` (required, number) - the value of the annotation.
++ `data_type`: `HOURS` (required, DataType) - the type of data represented by _value_.
++ condition: `IDEAL` (optional, Condition) - the condition of the _value_. If this field is omitted, the client should display the _value_ with a neutral color.
+
+## ConditionRange (object)
+Maps a range of graph data values onto a _Condition_. If a client encounters a value that is not contained in any _ConditionRange_ object returned to it, **it should assume the value _Condition_ is _UNKNOWN_.**
+
++ `min_value`: `0.0` (required, number) - the minimum value, inclusive.
++ `max_value`: `0.5` (required, number) - the maximum value, inclusive.
++ condition: `ALERT` (required, Condition) - the condition this range represents.
+
+## Condition (enum)
+The subjective condition of a data value. If a client encounters a _Condition_ that it does not understand, **it should default to _UNKNOWN_.**
+
++ ALERT
++ WARNING
++ IDEAL
++ UNKNOWN
+
+## TimeScale (enum)
+
++ `last_week`
++ `last_month`
++ `last_3_months`
+
+## DataType (enum)
+The types of data that can be represented by a _Graph_ object. If a client encounters a _DataType_ that it does not understand, **it should display the values in the user interface verbatim.**
+
++ SCORES - The data points are integers within the range `{0, 100}`, inclusive.
++ HOURS - The data points are floating point numbers representing whole and partial hours.
++ PERCENTS - The data points are floating point numbers within the range `{0.0, 1.0}` inclusive, and will always add up to a value of `1.0`.
+
+## GraphType (enum)
+The types of graphs that can be returned by trends. If the client encounters _GraphType_ that it does not understand, **it should ignore the entire _Graph_ object.**
+
++ GRID - the data should be displayed as a grid of values. if the client finds there are not enough values to complete a grid row, **it should display empty items in place of actual values.**
++ OVERVIEW - the data should be displayed as a collection of dots colored according to the _ConditionRange_ rules of the trend, whose literal values are not visible.
++ BAR - the data should be displayed as a bar graph.
++ BUBBLES - the data should be displayed as a series of overlapping bubbles. only applicable to the `DataType` value `PERCENTS`.
