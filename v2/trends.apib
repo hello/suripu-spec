@@ -22,7 +22,7 @@ Fetches the trends within the given *time-scale*.
 + `max_value`: `9.0` (required, number)
 + sections (required, array[GraphSection])
 + `condition_ranges`: `` (optional, array[ConditionRange]) - defines the relationship between a value, and its subjective feeling. if this field is omitted, the client **should assume the _Condition_ for all values is _UNKNOWN_.**
-+ annotations: `[{"title": "Weekdays", "value": 8.3, "data_type": "HOURS"}]` (optional, array[Annotation]) - calls out specific information related to the trend graph.
++ annotations: `[{"title": "Weekdays", "value": 8.3, "data_type": "HOURS"}]` (optional, array[Annotation]) - calls out specific information related to the trend graph. if the implementation finds there is less than 7 days of data, **this field should be omitted in responses.**
 
 ## GraphSection (object)
 Describes a sequence of values within a graph. For `LINE` graphs, a section would correspond to one month. For `GRID` graphs, a section would either correspond to a week (7 values). For `OVERVIEW` trends, a section would correspond to a month (28 to 31 values).
