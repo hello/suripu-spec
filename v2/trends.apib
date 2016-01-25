@@ -1,6 +1,23 @@
 FORMAT: 1A
 
-All `array` fields marked as `optional` should represent their "null" state as an empty array.
+# Trends API
+
+All `array` fields marked as `optional` should represent their "null" state as an empty array. Enum field serialization and deserialization should be case-insensitive in both producers and consumer of the trends API.
+
+The following trends will be returned for consumption by clients:
+
+- `title`: `Sleep Score`
+  + Becomes available after 3 days
+  + `data_type`: `SCORES`
+  + `graph_type`: `GRID|OVERVIEW`
+- `title`: `Sleep Duration`
+  + Becomes available after 7 days
+  + `data_type`: `HOURS`
+  + `graph_type`: `BAR`
+- `title`: `Sleep Depth`
+  + Becomes available after 7 days
+  + `data_type`: `PERCENTS`
+  + `graph_type`: `BUBBLES`
 
 # GET /v2/trends/{time-scale}
 Fetches the trends within the given *time-scale*.
