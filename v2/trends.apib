@@ -9,7 +9,7 @@ Fetches the trends within the given *time-scale*.
 	+ `time-scale`: `last_week` (required, TimeScale)
 
 + Attributes
-	+ `available_time_scales`: `["last_week", "last_month", "last_3_months"]` (required, array[TimeScale]) - the time scales the server can provide data for.
+	+ `available_time_scales`: `["last_week", "last_month", "last_3_months"]` (required, array[TimeScale]) - the time scales the server can provide data for. When an implementation does not have enough data to provide any cards, this field should be an empty array `[]`.
 	+ graphs (array[Graph]) - the objects found for the given time scale.
 
 # Data Structures
