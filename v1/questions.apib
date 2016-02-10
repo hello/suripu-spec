@@ -1,0 +1,69 @@
+FORMAT: 1A
+
+# Questions v1
+The questions API allows consumers to collect useful information from users in the form of prompts.
+
+**Requires access token**
+
+**Scopes**:
+
++ `OAuthScope.QUESTIONS_READ`
++ `OAuthScope.QUESTIONS_WRITE`
+
+# Get questions [GET /v1/questions?date={date}]
+
++ Parameters
+  + `date`: `2016-02-09` (required, string) - The date to retrieve questions for, in the format _yyyy-MM-dd_.
+
++ Attributes (array[Question])
+
+# Answer question [POST /v1/questions/save?account_question_id={id}]
+
++ Parameters
+  + `id`: `99` (required, number) - The id of the question for the authorized user.
+
+# Skip question [PUT /v1/questions/put?account_question_id={account-id}&id={question-id}]
+
++ Parameters
+  + `account-id`: `99` (required, number) - The id of the question for the authorized user.
+  + `question-id`: `1` (required, number) - The id of the question template for the implementation.
+
++ Headers
+
+  Content-Type: application/json
+
+# Data Structures
+
+## Question (object)
+Encapsulates a human-readable prompt, and two or more possible answers.
+
++ `id`: `0` (required, number) - The id of the question template for the implementation.
++ `account_question_id`: `99` (required, number) - The id of the question for the authorized user.
++ `text`: `How severe is your arson habit?` (required, string) - The human-readable question prompt to display to the user.
++ `choices` (required, array[Choice]) - All of the possible responses to a question.
++ `ask_local_time` (required, number) - The exact time to display a question in the user's local time zone.
++ `type`: `choice` (required, enum[Type])
+
+## Choice (object)
+
++ `id`: `0` (required, number)
++ `text`: `Warm` (required, string) - The human-readable title of the choice.
++ `question_id`: `1` (optional, number) - The id of the question template for the implementation.
+
+## Type (enum)
+The type of input a consumer of the questions API should display to receive feedback from the user.
+
++ `choice` - A single selection list of options.
++ `checkbox` - A multiple-selection list of options.
++ `quantity` - Currently unimplemented.
++ `duration` - Currently unimplemented.
++ `time` - A time picker. Currently unimplemented.
++ `text` - A free-form text field. Currently unimplemented.
+
+## AskTime (enum)
+When a question saved by the client should be displayed to the user.
+
+- `morning` - The question should be displayed in the morning. Roughly 4am to 12pm.
+- `afternoon` - The question should be displayed in the afternoon. Roughly 12pm to 5pm.
+- `evening` - The question should be displayed in the evening. Roughly 5pm to 10pm.
+- `anytime` - The question can be displayed whenever the client has the opportunity.
