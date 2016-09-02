@@ -1,0 +1,70 @@
+FORMAT: 1A
+
+# Sensors
+
+API to obtain Sense's sensors' metadata and values
+
+## Sensors [/v2/sensors]
+
+The main path for the sensors API
+
+## Get sensor, or all sensors, metadata and values [GET /v2/sensors/{type}/{?increment}{&scope}]
+
++ Parameters
+    + type (enum[string], required)
+
+        type of the sensor
+
+        + Members
+            + `all`
+            + `temp`
+            + `humidity`
+            + `air`
+            + `light`
+            + `sound`
+            + `voc`
+            + `co2`
+            + `uv`
+            + `light_temp`
+            + `pressure`
+
+    + increment: `5` (number, optional) - time increment between each data point, in minutes
+        + Default: `5`
+
+    + scope: (enum[string], optional)
+        + Default: `day`
+
+        time scope that defines the amount of data to be returned
+
+        + Members
+            + `day`
+            + `week`
+
++ Response 200 (application/json)
+    
+    {
+        "status" : "",
+        "sensors" : [
+            {
+                "type" : "",
+                "condition" : "",
+                "value" : "",
+                "unit" : "",
+                "scale" : [
+                    {
+                        "name" : "",
+                        "min" : 0,
+                        "max" : 100,
+                        "condition" : ""
+                    }
+                 ],
+                 "data" : [
+                    {
+                        "value" : 0,
+                        "datetime" : 1234567890,
+                        "offset" : 1234567890
+                    }
+                 ]
+            }
+        ]
+    }
