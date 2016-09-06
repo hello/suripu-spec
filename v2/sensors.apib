@@ -8,15 +8,14 @@ API to obtain Sense's sensors' metadata and values
 
 The main path for the sensors API
 
-## Get sensor, or all sensors, metadata and values [GET /v2/sensors/{type}/{?increment}{&scope}]
+## Get sensor, or all sensors, metadata and values [GET /v2/sensors/{?types}{&increment}{&scope}]
 
 + Parameters
-    + type (enum[string], required)
+    + types (enum[string], required)
 
-        type of the sensor
+        comma separated list of sensor types
 
         + Members
-            + `all`
             + `temp`
             + `humidity`
             + `air`
