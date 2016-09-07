@@ -66,9 +66,7 @@ Get a set of data points in a specific scope for each specified sensor.  The POS
 + Response 200 (application/json)
 
     {
-        "type" : "TEMP",
-        "unit" : "CELCIUS",
-        "values" : [
+        "TEMP" : [
             {
                 "value" : 71,
                 "offset_millis" : 1234567890,
@@ -77,42 +75,38 @@ Get a set of data points in a specific scope for each specified sensor.  The POS
         ]
     }
 
-    + Attributes
-        + type (enum, required)
-            + Members
-                + `TEMP`
-                + `AIR`
-                + `HUMIDITY`
-                + `VOC`
-                + `CO2`
-                + `UV`
-                + `LIGHT`
-                + `LIGHT_TEMP`
-                + `SOUND`
-                + `PRESSURE`
-
-        + unit (enum, required)
-            + Members
-                + 'CELCIUS`
-                + `FAHRENHEIT`
-                + `MG_CM`
-                + `PERCENT`
-                + `LUX`
-                + `DB`
-                + `VOC`
-                + `PPM`
-                + `RATIO`
-                + `KELVIN`
-                + `KPA`
-        
-        + values (array[DataPoint], required)
 
 ## Data Structures
 
 ### Sensor
 
 + type: `TEMP` (enum, required) - type of sensor
+    + Members
+        + `TEMP`
+        + `AIR`
+        + `HUMIDITY`
+        + `VOC`
+        + `CO2`
+        + `UV`
+        + `LIGHT`
+        + `LIGHT_TEMP`
+        + `SOUND`
+        + `PRESSURE`
+
 + unit: `CELCIUS` (enum, required) - unit for the sensor value
+    + Members
+        + 'CELCIUS`
+        + `FAHRENHEIT`
+        + `MG_CM`
+        + `PERCENT`
+        + `LUX`
+        + `DB`
+        + `VOC`
+        + `PPM`
+        + `RATIO`
+        + `KELVIN`
+        + `KPA`
+
 + name: `Temperature` (string, required) - localized name of the sensor
 + value: `80` (number, required) - current value of sensor
 + message: `The temperature is just right` (string, required) - localized message for the current value of the sensor
