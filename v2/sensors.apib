@@ -36,7 +36,11 @@ Get the list of sensors, in server-defined order, with it's current value.  In a
     }
 
     + Attributes
-        + status (string, required)
+        + status (enum, required)
+            + Members
+                + OK
+                + NO_SENSE
+                + WAITING
         + sensors (array[Sensor], required)
 
 ## Get data points for specified sensors [POST /v2/sensors]
