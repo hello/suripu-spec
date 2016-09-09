@@ -18,8 +18,9 @@ Get the list of sensors, in server-defined order, with it's current value.  In a
        "status" : "OK",
        "sensors" : [
             {
-                "type" : "TEMP",
+                "type" : "TEMPERATURE",
                 "name" : "Temperature",
+                "condition" : "IDEAL",
                 "unit" : "CELCIUS",
                 "value" : 70,
                 "message" : "The temperature is just right",
@@ -40,7 +41,7 @@ Get the list of sensors, in server-defined order, with it's current value.  In a
             + Members
                 + OK
                 + NO_SENSE
-                + WAITING
+                + WAITING_FOR_DATA
         + sensors (array[Sensor], required)
 
 ## Get data points for specified sensors [POST /v2/sensors]
@@ -52,7 +53,7 @@ Get a set of data points in a specific scope for each specified sensor.  The POS
     {
         "sensors" : [
             {
-                "type" : "TEMP",
+                "type" : "TEMPERATURE",
                 "scope" : "DAY_5_MINUTE"
                 "unit" : "CELCIUS",
                 "aggregation_method" : "AVG"
@@ -66,23 +67,30 @@ Get a set of data points in a specific scope for each specified sensor.  The POS
 + Response 200 (application/json)
 
     {
-        "TEMP" : [
+        "timestamps" : [
             {
-                "value" : 71,
-                "offset_millis" : 1234567890,
-                "timestamp" : 123456789
+                "o" : 123456789,
+                "t" : 123456789
             }
-        ]
+        ],
+        "sensors" : {
+            "TEMPERATURE" : [,
+                20.1, 30, 40.8, 50, 60, 10
+            ]
+        }
     }
 
++ Attributes
+    + timestamps (array[Timestamp], optional)
+    + sensors (object, optional)
 
 ## Data Structures
 
 ### Sensor
 
-+ type: `TEMP` (enum, required) - type of sensor
++ type: `TEMPERATURE` (enum, required) - type of sensor
     + Members
-        + `TEMP`
+        + `TEMPERATURE`
         + `AIR`
         + `HUMIDITY`
         + `VOC`
@@ -106,6 +114,12 @@ Get a set of data points in a specific scope for each specified sensor.  The POS
         + `RATIO`
         + `KELVIN`
         + `KPA`
+
++ condition: `IDEAL` (enum, required) - condition of sensor based on current value
+    + Members
+        + `IDEAL`
+        + `WARNING`
+        + `ALERT`
 
 + name: `Temperature` (string, required) - localized name of the sensor
 + value: `80` (number, required) - current value of sensor
@@ -139,3 +153,9 @@ Get a set of data points in a specific scope for each specified sensor.  The POS
         + AVG
         + MIN
         + MAX
+
+## Timestamp
+
++ o: `-12345677` (number, required) - offset from utc, to apply to time
++ t: `123456789` (number, required) - time in milliseconds from epoc
+
