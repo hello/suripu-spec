@@ -8,63 +8,154 @@ API to obtain Sense's sensors' metadata and values
 
 The main path for the sensors API
 
-## Get sensor, or all sensors, metadata and values [GET /v2/sensors/{type}/{?increment}{&scope}]
+## Get the list of sensors [GET /v2/sensors]
 
-+ Parameters
-    + type (enum[string], required)
-
-        type of the sensor
-
-        + Members
-            + `all`
-            + `temp`
-            + `humidity`
-            + `air`
-            + `light`
-            + `sound`
-            + `voc`
-            + `co2`
-            + `uv`
-            + `light_temp`
-            + `pressure`
-
-    + increment: `5` (number, optional) - time increment between each data point, in minutes
-        + Default: `5`
-
-    + scope: (enum[string], optional)
-        + Default: `day`
-
-        time scope that defines the amount of data to be returned
-
-        + Members
-            + `day`
-            + `week`
+Get the list of sensors, in server-defined order, with it's current value.  In addition to the list, if available, the status of the sensor system is also returned.
 
 + Response 200 (application/json)
-    
+
     {
-        "status" : "",
-        "sensors" : [
+       "status" : "OK",
+       "sensors" : [
             {
-                "type" : "",
-                "condition" : "",
-                "value" : "",
-                "unit" : "",
+                "type" : "TEMPERATURE",
+                "name" : "Temperature",
+                "condition" : "IDEAL",
+                "unit" : "CELCIUS",
+                "value" : 70,
+                "message" : "The temperature is just right",
                 "scale" : [
                     {
-                        "name" : "",
+                        "name" : "Cold",
                         "min" : 0,
-                        "max" : 100,
-                        "condition" : ""
+                        "max" : 35,
+                        "condition" : "ALERT"
                     }
-                 ],
-                 "data" : [
-                    {
-                        "value" : 0,
-                        "datetime" : 1234567890,
-                        "offset" : 1234567890
-                    }
-                 ]
+                ]
+            }
+       ]
+    }
+
+    + Attributes
+        + status (enum, required)
+            + Members
+                + OK
+                + NO_SENSE
+                + WAITING_FOR_DATA
+        + sensors (array[Sensor], required)
+
+## Get data points for specified sensors [POST /v2/sensors]
+
+Get a set of data points in a specific scope for each specified sensor.  The POST HTTP method is used over the GET method to allow sending a request payload to the server to specify customizations for each sensor.
+
++ Request (application/json)
+
+    {
+        "sensors" : [
+            {
+                "type" : "TEMPERATURE",
+                "scope" : "DAY_5_MINUTE"
+                "unit" : "CELCIUS",
+                "aggregation_method" : "AVG"
             }
         ]
     }
+
+    + Attributes
+        + sensors (array[DataRequest], required)
+
++ Response 200 (application/json)
+
+    {
+        "timestamps" : [
+            {
+                "o" : 123456789,
+                "t" : 123456789
+            }
+        ],
+        "sensors" : {
+            "TEMPERATURE" : [,
+                20.1, 30, 40.8, 50, 60, 10
+            ]
+        }
+    }
+
++ Attributes
+    + timestamps (array[Timestamp], optional)
+    + sensors (object, optional)
+
+## Data Structures
+
+### Sensor
+
++ type: `TEMPERATURE` (enum, required) - type of sensor
+    + Members
+        + `TEMPERATURE`
+        + `AIR`
+        + `HUMIDITY`
+        + `VOC`
+        + `CO2`
+        + `UV`
+        + `LIGHT`
+        + `LIGHT_TEMP`
+        + `SOUND`
+        + `PRESSURE`
+
++ unit: `CELCIUS` (enum, required) - unit for the sensor value
+    + Members
+        + 'CELCIUS`
+        + `FAHRENHEIT`
+        + `MG_CM`
+        + `PERCENT`
+        + `LUX`
+        + `DB`
+        + `VOC`
+        + `PPM`
+        + `RATIO`
+        + `KELVIN`
+        + `KPA`
+
++ condition: `IDEAL` (enum, required) - condition of sensor based on current value
+    + Members
+        + `IDEAL`
+        + `WARNING`
+        + `ALERT`
+
++ name: `Temperature` (string, required) - localized name of the sensor
++ value: `80` (number, required) - current value of sensor
++ message: `The temperature is just right` (string, required) - localized message for the current value of the sensor
++ scale: (array[Scale]) - array of Scale objects
+
+### Scale
+
++ min: `0` (number, optional) - minimum value for this scale.  Can be null to denote no value
++ max: `0` (number, optional) - max value for this scale.  Can be null to denote no max value
++ name: `Dry` (string, required) - localized name for this scale
++ condition: `IDEAL` (enum, required)
+    + Members
+        + IDEAL
+        + WARNING
+        + ALERT
+
+### DataPoint
+
++ value: `0` (number, required) - value of the data point. -1 denotes gap in data
++ offset_millis: `123456789` (number, required) - tz offset in milliseconds
++ timestamp: `123456789` (number, required) timestamp for the datapoint
+
+## DataRequest
+
++ type: `TEMP` (enum, required) - type of sensor
++ scope: `DAY_5_MIN` (enum, required) - scope of the data
++ unit: `CELCIUS` (enum, optional) - unit for the data point
++ aggregate_method: `AVG` (enum, optional) - what the data point value represent
+    + Members
+        + AVG
+        + MIN
+        + MAX
+
+## Timestamp
+
++ o: `-12345677` (number, required) - offset from utc, to apply to time
++ t: `123456789` (number, required) - time in milliseconds from epoc
+
