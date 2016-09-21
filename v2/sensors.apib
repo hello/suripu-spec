@@ -46,23 +46,22 @@ Get the list of sensors, in server-defined order, with it's current value.  In a
 
 ## Get data points for specified sensors [POST /v2/sensors]
 
-Get a set of data points in a specific scope for each specified sensor.  The POST HTTP method is used over the GET method to allow sending a request payload to the server to specify customizations for each sensor.
+Get a set of data points in a specific scope for each specified sensor.  The POST HTTP method is used over the GET method to allow sending a request payload to the server
 
 + Request (application/json)
 
     {
-        "sensors" : [
-            {
-                "type" : "TEMPERATURE",
-                "scope" : "DAY_5_MINUTE"
-                "unit" : "CELCIUS",
-                "aggregation_method" : "AVG"
-            }
-        ]
+        "scope" : "DAY_5_MINUTE",
+        "sensors" : ["TEMPERATURE, HUMIDITY"]
     }
 
     + Attributes
-        + sensors (array[DataRequest], required)
+        + scope (enum, required)
+            + Members
+                + DAY_5_MINUTE
+                + WEEK_1_HOUR
+                + LAST_3H_5_MINUTE 
+        + sensors (array[string], required)
 
 + Response 200 (application/json)
 
@@ -142,17 +141,6 @@ Get a set of data points in a specific scope for each specified sensor.  The POS
 + value: `0` (number, required) - value of the data point. -1 denotes gap in data
 + offset_millis: `123456789` (number, required) - tz offset in milliseconds
 + timestamp: `123456789` (number, required) timestamp for the datapoint
-
-## DataRequest
-
-+ type: `TEMP` (enum, required) - type of sensor
-+ scope: `DAY_5_MIN` (enum, required) - scope of the data
-+ unit: `CELCIUS` (enum, optional) - unit for the data point
-+ aggregate_method: `AVG` (enum, optional) - what the data point value represent
-    + Members
-        + AVG
-        + MIN
-        + MAX
 
 ## Timestamp
 
