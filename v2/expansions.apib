@@ -18,11 +18,16 @@ objects.  See below for definition.
 
     [
         {
-            "id" : "1",
+            "id" : 1,
+            "description" : "something something",
             "category" : "TEMPERATURE",
             "device_name" : "Nest Thermostat",
             "service_name" : "Nest",
-            "icon_uri" : "https://s3.amazon.com",
+            "icon" : {
+                "iphone_1x" : "https://s3.amazon.com",
+                "iphone_2x" : "https://s3.amazon.com",
+                "iphone_3x" : "https://s3.amazon.com"
+            },
             "auth_uri" : "https://oauth.com",
             "completion_uri" : "https://complete.oauth.com",
             "state" : "NOT_CONNECTED"
@@ -40,11 +45,12 @@ user views details of the expansion so client can see the state of the expansion
 + Response 200 (application/json)
 
     {
-        "id" : "1",
+        "id" : 1,
+        "description" : "something something",
         "category" : "TEMPERATURE",
         "device_name" : "Nest Thermostat",
         "service_name" : "Nest",
-        "icon_uri" : "https://s3.amazon.com",
+        "icon" : {},
         "auth_uri" : "https://oauth.sample.com",
         "completion_uri" : ""https://done.sample.com",
         "state" : "NOT_CONNECTED"
@@ -79,11 +85,13 @@ The list will contain Configuration objects.  See definition.
     [
         {
             "id" : "1",
-            "name" : "bedroom"
+            "name" : "bedroom",
+            "selected" : true
         },
         {
             "id" : "2",
-            "name" : "living room"
+            "name" : "living room",
+            "selected" : false
         }
 
     ]
@@ -107,13 +115,14 @@ Update the expansion by id with the selected configuration
 ## Expansion (object)
 Object representing an expansion for Sense
 
-+ id (string, required) - internal id of the expansion
++ id (number, required) - internal id of the expansion
 + category (enum, required) - internal category for this expansion
 + device_name (string, optional) - localized name of the device
 + service_name (string, required) - name of this expansion service
-+ icon_uri (string, optional) - remote uri to icon image for expansion
++ icon (MultiDensityImage, optional) - remote uri to icon image for expansion
 + auth_uri (string, required) - auth uri to begin expansion authentication
 + completion_uri (string, required) - uri to let client know when auth is complete
++ description (string, required) - the description for this expansion
 + state (enum, required) - state for this expansion as it relates to  account
     + Members
         + NOT_CONNECTED
@@ -122,8 +131,16 @@ Object representing an expansion for Sense
         + REVOKED
         + NOT_CONFIGURED
 
+## MultiDensityImage (object)
+Object representing a set of urls to an image with multiple densities
+
++ phone_1x (string, required) - url for 1x image
++ phone_2x (string, required) - url for 2x image
++ phone_3x (string, required) - url for 3x image
+
 ## Configuration (object)
 
 + id (string, required) - id of configuration
 + name (string, required) - name of configuration client can display
++ selected (boolean, required) - flag to indicate whether configuration is selected
 
