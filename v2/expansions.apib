@@ -1,0 +1,160 @@
+FORMAT: 1A
+
+# Expansions
+
+API to set up and configure expansions
+
+## Expansions [/v2/expansions]
+
+The main path for the expansions API
+
+## Get the list of expansions [GET /v2/expansions]
+
+Get the list of supported expansions, their metadata, and the current state as
+it relates to the current account.  The response will be an array of Expansion
+objects.  See below for definition.
+
++ Response 200 (application/json)
+
+    [
+        {
+            "id" : 1,
+            "description" : "something something",
+            "category" : "TEMPERATURE",
+            "device_name" : "Nest Thermostat",
+            "service_name" : "Nest",
+            "icon" : {
+                "iphone_1x" : "https://s3.amazon.com",
+                "iphone_2x" : "https://s3.amazon.com",
+                "iphone_3x" : "https://s3.amazon.com"
+            },
+            "auth_uri" : "https://oauth.com",
+            "completion_uri" : "https://complete.oauth.com",
+            "state" : "NOT_CONNECTED",
+            "value_range" : {
+                "min" : 0,
+                "max" : 100
+            }
+        }
+    ]
+
+## Get expansion by id [GET /v2/expansions/{id}
+
+Get an expansion and it's metadata by id.  This is needed after auth or when
+user views details of the expansion so client can see the state of the expansion
+
++ Parameters
+    + id `1` (string, required)
+
++ Response 200 (application/json)
+
+    {
+        "id" : 1,
+        "description" : "something something",
+        "category" : "TEMPERATURE",
+        "device_name" : "Nest Thermostat",
+        "service_name" : "Nest",
+        "icon" : {},
+        "auth_uri" : "https://oauth.sample.com",
+        "completion_uri" : ""https://done.sample.com",
+        "state" : "NOT_CONNECTED",
+        "value_range" : {
+            "min" : 0,
+            "max" : 100
+        }
+    }
+
+## Update expansion state [PATCH /v2/expansions/{id}]
+
+Update an expansions's state to let server know user wants it to be on/off, or
+disconnect it permanently.
+
++ Parameters
+    + id `1` (string, required)
+
++ Request
+    
+    {
+        "state" : "CONNECTED_OFF"
+    }
+
++ Response 204 (application/json)
+
+## Get expansion configurations [GET /v2/expansions/{id}/configurations
+
+Get a list of available configurations that client can select for the expansion.
+The list will contain Configuration objects.  See definition.
+
++ Parameters
+    + id `1` (string, required)
+
++ Response 200 (application/json)
+
+    [
+        {
+            "id" : "1",
+            "name" : "bedroom",
+            "selected" : true
+        },
+        {
+            "id" : "2",
+            "name" : "living room",
+            "selected" : false
+        }
+
+    ]
+
+## Update expansion with configuration [PUT /v2/expansions/{id}/configurations
+
+Update the expansion by id with the selected configuration
+
++ Parameters
+    + id `1` (string, required)
+
++ Request
+
+    {
+        "id" : "2"
+    }
+
++ Response 204 (application/json)
+
+
+## Expansion (object)
+Object representing an expansion for Sense
+
++ id (number, required) - internal id of the expansion
++ category (enum, required) - internal category for this expansion
++ device_name (string, optional) - localized name of the device
++ service_name (string, required) - name of this expansion service
++ icon (MultiDensityImage, optional) - remote uri to icon image for expansion
++ auth_uri (string, required) - auth uri to begin expansion authentication
++ completion_uri (string, required) - uri to let client know when auth is complete
++ description (string, required) - the description for this expansion
++ state (enum, required) - state for this expansion as it relates to  account
+    + Members
+        + NOT_CONNECTED
+        + CONNECTED_ON
+        + CONNECTED_OFF
+        + REVOKED
+        + NOT_CONFIGURED
++ value_range (object, optional) - valid values for the expansion
+
+## ValueRange (object)
+
++ min (number, required) - minimum possible value
++ max (number, required) - maximum possible value
+
+## MultiDensityImage (object)
+Object representing a set of urls to an image with multiple densities
+
++ phone_1x (string, required) - url for 1x image
++ phone_2x (string, required) - url for 2x image
++ phone_3x (string, required) - url for 3x image
+
+## Configuration (object)
+
++ id (string, required) - id of configuration
++ name (string, required) - name of configuration client can display
++ selected (boolean, required) - flag to indicate whether configuration is selected
+
