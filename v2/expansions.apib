@@ -30,7 +30,11 @@ objects.  See below for definition.
             },
             "auth_uri" : "https://oauth.com",
             "completion_uri" : "https://complete.oauth.com",
-            "state" : "NOT_CONNECTED"
+            "state" : "NOT_CONNECTED",
+            "value_range" : {
+                "min" : 0,
+                "max" : 100
+            }
         }
     ]
 
@@ -53,7 +57,11 @@ user views details of the expansion so client can see the state of the expansion
         "icon" : {},
         "auth_uri" : "https://oauth.sample.com",
         "completion_uri" : ""https://done.sample.com",
-        "state" : "NOT_CONNECTED"
+        "state" : "NOT_CONNECTED",
+        "value_range" : {
+            "min" : 0,
+            "max" : 100
+        }
     }
 
 ## Update expansion state [PATCH /v2/expansions/{id}]
@@ -130,6 +138,12 @@ Object representing an expansion for Sense
         + CONNECTED_OFF
         + REVOKED
         + NOT_CONFIGURED
++ value_range (object, optional) - valid values for the expansion
+
+## ValueRange (object)
+
++ min (number, required) - minimum possible value
++ max (number, required) - maximum possible value
 
 ## MultiDensityImage (object)
 Object representing a set of urls to an image with multiple densities
