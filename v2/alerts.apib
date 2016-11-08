@@ -10,8 +10,7 @@ The main path for the alerts API
 
 ## Get the list of alerts [GET /v2/alerts]
 
-Retrieve a list of unseen alerts with localized text to be displayed.  Once
-retrieved, these alerts will be automatically marked as seen.
+Retrieve a list of unseen alerts with localized text to be displayed.  Once retrieved, these alerts will be automatically marked as seen.
 
 + Response 200 (application/json)
 
@@ -29,6 +28,7 @@ Object representing an alert
 
 + title (string, optional) - localized title of the alert
 + body (string, required) - localized body of the alert
-+ category (enum, required) - a category of the alert that can drive user
-actions
++ category (enum, required) - a category of the alert that can drive user actions
+    + Members
+        + EXPANSION_UNREACHABLE
 
