@@ -1,0 +1,34 @@
+FORMAT: 1A
+
+# Alerts
+
+API to retrieve server specified alerts to be displayed to user
+
+## Alerts [/v2/alerts]
+
+The main path for the alerts API
+
+## Get the list of alerts [GET /v2/alerts]
+
+Retrieve a list of unseen alerts with localized text to be displayed.  Once
+retrieved, these alerts will be automatically marked as seen.
+
++ Response 200 (application/json)
+
+    [
+        {
+            "title" : "Some title",
+            "body" : "Something went wrong",
+            "category" : "EXPANSION_UNREACHABLE"
+        }
+    ]
+
+## Alert (object)
+
+Object representing an alert
+
++ title (string, optional) - localized title of the alert
++ body (string, required) - localized body of the alert
++ category (enum, required) - a category of the alert that can drive user
+actions
+
