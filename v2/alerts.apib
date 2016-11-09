@@ -10,7 +10,7 @@ The main path for the alerts API
 
 ## Get the list of alerts [GET /v2/alerts]
 
-Retrieve a list of unseen alerts with localized text to be displayed.  Once retrieved, these alerts will be automatically marked as seen.
+Retrieve a list of unseen alerts with localized text to be displayed.  Once retrieved, these alerts will be automatically marked as seen and should no longer be returned.  In addition, the list will contain only 1 or 0 objects.  Both behaviors might change in the future.
 
 + Response 200 (application/json)
 
