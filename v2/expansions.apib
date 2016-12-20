@@ -99,7 +99,11 @@ The list will contain Configuration objects.  See definition.
         {
             "id" : "2",
             "name" : "living room",
-            "selected" : false
+            "selected" : false,
+            "capabilities" : [
+                "HEAT",
+                "COOL"
+            ]
         }
 
     ]
@@ -157,4 +161,7 @@ Object representing a set of urls to an image with multiple densities
 + id (string, required) - id of configuration
 + name (string, required) - name of configuration client can display
 + selected (boolean, required) - flag to indicate whether configuration is selected
-
++ capabilities (array, optional) - list of enum values that describe what abilities the expansion configuration has.
+    + Members
+        + HEAT
+        + COOL
