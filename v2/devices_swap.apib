@@ -1,15 +1,22 @@
 FORMAT: 1A
 
-# Device Swap
+# Devices
 
-API to notify server which sense device to swap with current user's paired device. 
+API to manage devices associated with user. 
+There are more routes available not currently listed in this spec that will be updated in the near future. 
+
+## Devices [/v2/devices]
+
+The main path for the devices API
+
+## Send request to swap devices [PUT /v2/devices/swap]
+
+Notify server which sense device to swap with current user's paired device. 
 In addition, it pairs user's existing sleep pills with new sense device.
 
 In staging, making this request requires adding sense id to 'sense_swap_enabled' feature flipper.
 There is an approximate 15 minute period after performing successful swap before the same sense can be used 
 in swap request without triggering error. 
-
-## Send request to swap devices [PUT /v2/devices/swap]
 
 + Request (application/json)
 
