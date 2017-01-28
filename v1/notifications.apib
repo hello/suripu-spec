@@ -1,0 +1,40 @@
+FORMAT: 1A
+
+# Notifications
+
+API to enable the server to send push notifications to mobile devices
+
+## Notifications [/v1/notifications]
+
+The main path for the notifications resource API
+
+## Store the token [POST /v1/notifications/registration]
+
+API used to update the server with the push notification token retrieved through
+the push notification service for the platform
+
++ Request 
+    
+    {
+        "token" : <the token>,
+        "os" : <android | ios>,
+        "version" : <platform os version>,
+        "app_version" : <version of the app, 2.0.4>
+    }
+
++ Response 204 (application/json)
+
+## Delete the token [DELETE /v1/notifications/registration]
+
+API to remove a registered token.  Typically not needed
+
++ Request
+
+    {
+        "token" : <the token>,
+        "os" : <android | ios>,
+        "version" : <platform os version>,
+        "app_version" : <version of the app, 2.0.4>
+    }
+
++ Response 204 (application/json)
