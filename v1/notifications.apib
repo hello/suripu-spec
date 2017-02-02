@@ -8,6 +8,40 @@ API to enable the server to send push notifications to mobile devices
 
 The main path for the notifications resource API
 
+## Get notification settings [GET /v1/notifications]
+
+Retrieve a list supported notifications and their current state and information
+
++ Response 200 (application/json)
+
+    [
+        {
+            "type" : <enum string of notification>,
+            "enabled" : <true | false>,
+            "schedule" : {
+                "hour" : <0 - 24>,
+                "minute" : <0 - 60>
+            }
+        }
+    ]
+
+## Update notification settings [PUT /v1/notifications]
+
+Update notification settings
+
++ Request
+    
+    [
+        {
+            "type" : <enum string of notification>,
+            "enabled" : <true | false>,
+            "schedule" : {
+                "hour" : <0 - 24>,
+                "minute" : <0 - 60>
+            }
+        }
+    ]
+
 ## Store the token [POST /v1/notifications/registration]
 
 API used to update the server with the push notification token retrieved through
@@ -38,3 +72,28 @@ API to remove a registered token.  Typically not needed
     }
 
 + Response 204 (application/json)
+
+## Token
+
++ token (string, required) - the string representation of the push token
++ os (enum, required) - either android or ios
+    + Members
+        + android
+        + ios
++ version (string, required) - iOS or Android OS version
++ app_version (string, required) - the application version
+
+## NotificationSetting (object)
+
++ type (enum, required) - string value indicating notification type
+    + Members
+        + SLEEP_SCORE
+        + SYSTEM
+        + SLEEP_REMINDER
++ enabled (boolean, required) - true if enabled, false otherwise
++ schedule (object, optional) - object representing the set schedule for the notification
+
+## NotificationSchedule (object)
+
++ hour (number, required) - a number between 0 - 24 representing the hour of the day
++ minute (number, required) - a number betwen 0 - 60 representing the minute of the day
