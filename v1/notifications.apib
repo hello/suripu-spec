@@ -16,11 +16,12 @@ Retrieve a list supported notifications and their current state and information
 
     [
         {
-            "type" : <enum string of notification>,
-            "enabled" : <true | false>,
+            "name" : "Sleep Score",
+            "type" : "SLEEP_SCORE",
+            "enabled" : true,
             "schedule" : {
-                "hour" : <0 - 24>,
-                "minute" : <0 - 60>
+                "hour" : 23,
+                "minute" : 30
             }
         }
     ]
@@ -33,11 +34,12 @@ Update notification settings
     
     [
         {
-            "type" : <enum string of notification>,
-            "enabled" : <true | false>,
+            "name" : "Sleep Score",
+            "type" : "SLEEP_SCORE",
+            "enabled" : false,
             "schedule" : {
-                "hour" : <0 - 24>,
-                "minute" : <0 - 60>
+                "hour" : 23,
+                "minute" : 30
             }
         }
     ]
@@ -85,6 +87,7 @@ API to remove a registered token.  Typically not needed
 
 ## NotificationSetting (object)
 
++ name (string, required) - localized name for this type of notification
 + type (enum, required) - string value indicating notification type
     + Members
         + SLEEP_SCORE
