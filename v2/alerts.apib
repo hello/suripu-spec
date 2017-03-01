@@ -24,11 +24,18 @@ Retrieve a list of unseen alerts with localized text to be displayed.  Once retr
 
 ## Alert (object)
 
-Object representing an alert
+Object representing an alert.  Currently, the priority for the alerts is set to show EXPANSION_UNREACHABLE and SENSE_MUTED first.  If all alerts are determined by the server, the order should now be SENSE_NOT_PAIRED, SENSE_LAST_SEEN, SENSE_MUTED, EXPANSION_UNREACHABLE, PILL_NOT_PAIRED, PILL_LOW_BATTERY, PILL_LAST_SEEN, PILL_DFU. Order subject to change. 
 
 + title (string, optional) - localized title of the alert
 + body (string, required) - localized body of the alert
 + category (enum, required) - a category of the alert that can drive user actions
     + Members
-        + EXPANSION_UNREACHABLE
-
+        + EXPANSION_UNREACHABLE - when Nest cannot be reached
+        + SENSE_MUTED - when Sense paired to the account is currently muted.
+        + PILL_LOW_BATTERY - when the pill attached to account drops by a certain percentage. No more than once a day.
+        + PILL_LAST_SEEN - when the pill has not been seen for more than 24 hours (1 day). No more than once a day.
+        + PILL_DFU - when a pill firmware update is available for the pill attached to the account. No more than once, every 2 hours to account for next heartbeat after the update.
+        + PILL_NOT_PAIRED - when a pill is not paired to the account.
+        + SENSE_NOT_PAIRED - when a Sense is not paired to the account.
+        + SENSE_LAST_SEEN - when the Sense has not been seen for more than 24 hours (1 day). No more than once a day.
+        + TIME_ZONE_MISSING - When Sense is paired, but a Time Zone is not set for the account.
