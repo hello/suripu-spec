@@ -19,6 +19,85 @@ Timeline is an API allowing consumers to view detailed and summarized data about
     + metrics (array[Metric], required)
     + sleep_periods (array[Period], required) - Sleep periods included in timeline
 
+### View a night's sleep data [GET]
+
++ Response 200 (application/json)
+    + Attributes (Timeline)
+
+## Event [/timeline/{date}/events/{type}/{timestamp}]
+
++ Parameters
+    + date: `2015-04-12` (string, required) - An ISO8601 formatted date
+    + type: `ALARM_RANG` (string, required) - The type of the event
+    + timestamp: `1432768812` (number, required) - The unix timestamp of the time the event occured
+
++ Attributes
+    + timestamp: `1432768812` (number, required)
+    + `timezone_offset`: `860000` (number, required) - Offset between timestamp and user's local time in milliseconds
+    + `duration_millis`: `27000` (number, required) - Duration of the event in milliseconds
+    + `sleep_period`: `Afternoon` (enum, required) - Sleep period of event
+        + Members
+            + `MORNING`
+            + `AFTERNOON`
+            + `NIGHT`
+    + message: `You were moving around` (string)
+    + `sleep_depth`: `24` (number) - Depth of sleep during the event
+    + `sleep_state`: `LIGHT` (enum, required) - State of sleep depth or wakefulness
+        + Members
+            + `AWAKE`
+            + `SOUND`
+            + `MEDIUM`
+            + `LIGHT`
+    + `event_type`: `GENERIC_MOTION` (enum) - Type of the event which occurred
+        + Members
+            + `IN_BED`
+            + `GENERIC_MOTION`
+            + `PARTNER_MOTION`
+            + `GENERIC_SOUND`
+            + `SNORED`
+            + `SLEEP_TALKED`
+            + `LIGHT`
+            + `LIGHTS_OUT`
+            + `SUNSET`
+            + `SUNRISE`
+            + `GOT_IN_BED`
+            + `FELL_ASLEEP`
+            + `GOT_OUT_OF_BED`
+            + `WOKE_UP`
+            + `ALARM_RANG`
+            + `UNKNOWN`
+    + `valid_actions`: (array) - What actions can be taken on this event
+        + Items
+            + Members
+                + `ADJUST_TIME`
+                + `VERIFY`
+                + `REMOVE`
+                + `INCORRECT`
+
+### Amend the time of an event [PATCH]
+
++ Relation: update
++ Request (application/json)
+    + Attributes
+        + `new_event_time`: `14:52` (string, required) The corrected time submitted by the user
+        + `timezone_offset`: `860000` (number, required) - User's local time zone in milliseconds
+        + `sleep_period` : `AFTERNOON`(enum, required) - sleep period of event
+
++ Response 202 (application/json)
+    + Attributes (Timeline)
+
+### Mark an event as correct [PUT]
+
++ Relation: approve
++ Response 202 (application/json)
+    + Attributes (Timeline)
+
+### Delete an event [DELETE]
+
++ Relation: delete
++ Response 202 (application/json)
+    + Attributes (Timeline)
+
 ## Timeline [/timeline/{date_hour}]
 
 + Attributes
@@ -30,21 +109,15 @@ Timeline is an API allowing consumers to view detailed and summarized data about
             + `WARNING`
             + `ALERT`
     + message: `You were asleep for 7.8 hours and sleeping soundly for 5.4 hours.` (required, string)
-    + date: `2015-03-11` (required, string) - Date for the night of sleep, may not be the same as date_hour
+    + date_hour: `2015-03-11_12` (required, string) - Date for the night of sleep, may not be the same as date_hour
     + events (array[Event], required)
     + metrics (array[Metric], required)
     + sleep_periods (array[Period], required) - Sleep periods included in timeline
 
-
-### View a night's sleep data [GET]
-
-+ Response 200 (application/json)
-    + Attributes (Timeline)
-
-## Event [/timeline/{date}/events/{type}/{timestamp}]
+## Event [/timeline/{date_hour}/events/{type}/{timestamp}]
 
 + Parameters
-    + date: `2015-04-12` (string, required) - An ISO8601 formatted date
+    + + date_hour: `2015-03-11_12` (required, string) - date and hour
     + type: `ALARM_RANG` (string, required) - The type of the event
     + timestamp: `1432768812` (number, required) - The unix timestamp of the time the event occured
 
