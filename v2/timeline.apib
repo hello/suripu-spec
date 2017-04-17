@@ -3,7 +3,7 @@ FORMAT: 1A
 # Timeline v2
 Timeline is an API allowing consumers to view detailed and summarized data about a night of sleep.
 
-## Timeline [/timeline/{date}]
+## Timeline [GET /timeline/{date}]
 
 + Attributes
     + score: `78` (optional, number) - A value quantifying sleep quality
@@ -98,8 +98,9 @@ Timeline is an API allowing consumers to view detailed and summarized data about
 + Response 202 (application/json)
     + Attributes (Timeline)
 
-## Timeline [/timeline/{date_hour}]
-
+## Timeline [GET /timeline/{datetime}]
++ Parameters
+    + datetime: `2017-01-01T03:59` (required, string) - YYYY-mm-ddTHH:MM formatted string indicating current date and time of device / caller
 + Attributes
     + score: `78` (optional, number) - A value quantifying sleep quality
     + `score_condition`: `ALERT` (required, enum) - A relative value for sleep quality
@@ -109,15 +110,15 @@ Timeline is an API allowing consumers to view detailed and summarized data about
             + `WARNING`
             + `ALERT`
     + message: `You were asleep for 7.8 hours and sleeping soundly for 5.4 hours.` (required, string)
-    + date_hour: `2015-03-11_12` (required, string) - Date for the night of sleep, may not be the same as date_hour
+    + date: `2015-03-11` (required, string) - Date for the night of sleep
     + events (array[Event], required)
     + metrics (array[Metric], required)
     + sleep_periods (array[Period], required) - Sleep periods included in timeline
 
-## Event [/timeline/{date_hour}/events/{type}/{timestamp}]
+## Event [/timeline/{datetime}/events/{type}/{timestamp}]
 
 + Parameters
-    + + date_hour: `2015-03-11_12` (required, string) - date and hour
+    + datetime: `2017-01-01T03:59` (required, string) - YYYY-mm-ddTHH:MM formatted string indicating current date and time of device / caller
     + type: `ALARM_RANG` (string, required) - The type of the event
     + timestamp: `1432768812` (number, required) - The unix timestamp of the time the event occured
 
