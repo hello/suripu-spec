@@ -18,6 +18,7 @@ Timeline is an API allowing consumers to view detailed and summarized data about
     + events (array[Event], required)
     + metrics (array[Metric], required)
     + sleep_periods (array[Period], required) - Sleep periods included in timeline
+    + locked_down (boolean, required) - is the timeline fixed
 
 ### View a night's sleep data [GET]
 
@@ -114,6 +115,7 @@ Timeline is an API allowing consumers to view detailed and summarized data about
     + events (array[Event], required)
     + metrics (array[Metric], required)
     + sleep_periods (array[Period], required) - Sleep periods included in timeline
+    + locked_down (boolean, required) - is the timeline fixed
 
 ## Event [/timeline/{datetime}/events/{type}/{timestamp}]
 
