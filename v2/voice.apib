@@ -1,0 +1,42 @@
+FORMAT: 1A
+
+# Voice [/v2/voice]
+
+API for voice related end points.
+
+
+## Commands [GET /v2/voice/commands]
+
+Fetch a list of voice commands available for Sense with Voice.
+
++ Response 200 (application/json)
+
+{
+  "voice_command_topics": [
+    {
+      "title": "Alarm and Sleep Sounds",
+      "description": "Before each command, say \"Okay Sense\" to set an alarm or begin playing Sleep Sounds.",
+      "subtopics": [
+        {
+          "command_title": "Alarms",
+          "commands": [
+            "Wake me up at 10 AM.",
+            "Set alarm for tomorrow morning at 8."
+          ]
+        },
+        {
+          "command_title": "Sleep Sounds",
+          "commands": [
+            "Play a Sleep Sound.",
+            "Play White Noise."
+          ]
+        }
+      ],
+      "icon_urls": {
+        "phone_1x": "https://s3.amazonaws.com/hello-dev/images/voice/icon_alarms@1x.png",
+        "phone_2x": "https://s3.amazonaws.com/hello-dev/images/voice/icon_alarms@2x.png",
+        "phone_3x": "https://s3.amazonaws.com/hello-dev/images/voice/icon_alarms@3x.png"
+      }
+    }, ...
+  ]
+}
