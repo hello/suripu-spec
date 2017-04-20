@@ -47,3 +47,34 @@ Object representing an response
         + ACCOUNT_PAIRED_TO_MULTIPLE_SENSE - user has more than one sense paired 
         + NEW_SENSE_PAIRED_TO_DIFFERENT_ACCOUNT - requested sense is already paired to an account
 
+
+## List Paired accounts [GET /v2/devices/paired]
+
++ Response 200 (application/json)
+    [
+        {
+            "id":"abb202cd-77d4-4de5-9cd0-9a53805f3b3a",
+            "name":"pims",
+            "is_self":true
+        },
+        {   "id":"da626d1a-41bf-4b51-a166-ec17d40b7692",
+            "name":"Tim",
+            "is_self":false
+        },
+        {...}
+    ]
+
+## Unpair currently Paired accounts [POST /v2/devices/unpair]
+
++ Request (application/json)
+
+   [
+        {   "id":"da626d1a-41bf-4b51-a166-ec17d40b7692",
+            "name":"Tim",
+            "is_self":false
+        }
+    ]
+
++ Response 204 (application/json)
+
+
