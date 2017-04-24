@@ -1,0 +1,95 @@
+FORMAT: 1A
+
+# Insights v2
+
+## Insights [/insights]
+
++ Parameters
+	+ `update_last_viewed`: `true` (boolean, optional) - defaults to true
+
++ Attributes (array[Attachment])
+
+## Insight Article [/insights/attachments/article/{category}/{id}]
+
++ Parameters
+	+ `category`: `generic` (string, required)
+	+ `id`: `42` (number, required)
+
++ Attributes
+	+ `id`: `42` (number, required) - the id of the article.
+	+ `title`: `Light makes you sleep badly` (string, required) - the title of the article.
+	+ `body`: `Turn off the light.` (string, required) - the markdown body of the article.
+	+ `image_url`: `http://img.hello.is/example.png` (string, optional) - the location of the article's masthead image, if applicable.
+
+## Unread Status [/insights/unread]
+
++ Attributes
+	+ `unread_count`: `1` (number, required) - the number of insights waiting to be viewed
+	+ `last_viewed` (number, required) - UTC timestamp
+
+## Data Structures
+
+### Attachment
+
++ Attributes
+	+ `type`: `ARTICLE` (enum, required) - type of the attachment
+		+ Members
+			+ `ARTICLE` - corresponds to `ArticleAttachment` 
+			+ `QUESTION` - corresponds to `QuestionAttachment`
+			+ `GRAPH` - corresponds to `GraphAttachment`
+			+ `COLLECTION` - corresponds to `AttachmentCollection`
+	+ `unread`: `false` (boolean, required)
+
+### ArticleAttachment (Attachment)
+
++ Attributes
+	+ `id`: `42` (number, required) - the id of the article
+	+ `category`: `generic` (string, required) - the category of the article.
+	+ `title`: `Light makes you sleep badly` (string, required) - title of the article
+	+ `summary`: `Find out why!` (string, required) - markdown summary of the article
+
+### QuestionAttachment (Attachment)
+
++ Attributes
+	+ `id`: `9000` (number, required)
+	+ `text`: `Do you sleep better with a clown in your room?` (string, required)
+	+ `type`: `CHOICE` (enum, required)
+		+ Members
+			+ `CHOICE`
+			+ `CHECKBOX`
+			+ `QUANTITY`
+			+ `DURATION`
+			+ `TIME`
+			+ `TEXT`
+	+ `options` (array[QuestionOption], required)
+
+### QuestionOption
+
++ Attributes
+	+ `id`: `0` (number, required)
+	+ `question_id`: `9000` (number, required)
+	+ `text`: `Without a doubt` (string, required)
+
+### GraphAttachment (Attachment)
+
++ Attributes
+	+ `type`: `TIME_SERIES` (enum, required)
+		 + Members
+			+ `TIME_SERIES`
+		 	+ `HISTOGRAM`
+			+ `PIE`
+	+ `variations` (array[object], optional)
+		+ `uri`: `/insights/attachments/graphs/12345` (string, required) - relative URI to load the new version of the individual graph
+		+ `name`: `1 Week` (string, required) - human-readable title for the variation
+	+ `min_x` (number, required)
+	+ `max_x` (number, required)
+	+ `unit_x` (string, required)
+	+ `min_y`: `0.0` (number, required)
+	+ `max_y`: `42.0` (number, required)
+	+ `unit_y` (string, required)
+	+ `samples` (array[number], required)
+
+### AttachmentCollection (Attachment)
+
++ Attributes
+	+ `attachments` (array[Attachment], required)
